@@ -24,8 +24,15 @@ end
 
 puts "Created #{created_categories.count} categories"
 
-# Generate expenses from January 2024 to February 18, 2026
-puts "Creating expenses from January 2024 to February 18, 2026..."
+# SEED GUARD: If expense data already exist, skip seeding
+# The seeding takes a lot of time to finish especially if the date range gap is larger
+if Expense.exists?
+  puts "Expenses already exist. Skipping seed..."
+  exit
+end
+
+# Generate expenses from January 1 of the current year until today
+puts "Creating expenses from January 1 of the current year until today..."
 
 # Define expense templates for variety
 expense_templates = {
@@ -111,10 +118,10 @@ expense_templates = {
   ]
 }
 
-# Start date: January 1, 2024
-# End date: February 18, 2026
-start_date = Date.new(2024, 1, 1)
-end_date = Date.new(2026, 2, 18)
+# Start date: January 1 of the current year
+# End date: Today
+start_date = Date.new(Date.today.year, 1, 1)
+end_date = Date.today
 
 expense_count = 0
 current_date = start_date

@@ -1,3 +1,14 @@
+# SEED GUARD: If data already exist, skip seeding
+# Expense seeding takes a lot of time to finish especially if the date range gap is larger
+if Category.exists?
+  puts "Category already exist. Skipping seed..."
+end
+
+if Expense.exists?
+  puts "Expenses already exist. Skipping seed..."
+  exit
+end
+
 # Clear existing data
 puts "Clearing existing data..."
 Expense.destroy_all
@@ -23,13 +34,6 @@ created_categories = categories.map do |cat_name|
 end
 
 puts "Created #{created_categories.count} categories"
-
-# SEED GUARD: If expense data already exist, skip seeding
-# The seeding takes a lot of time to finish especially if the date range gap is larger
-if Expense.exists?
-  puts "Expenses already exist. Skipping seed..."
-  exit
-end
 
 # Generate expenses from January 1 of the current year until today
 puts "Creating expenses from January 1 of the current year until today..."

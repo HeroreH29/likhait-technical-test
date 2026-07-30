@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import HistoryPage from "./pages/HistoryPage";
 import { COLORS } from "./constants/colors";
+import CategoriesPage from "./pages/CategoriesPage";
+import BasePageLayout from "./layouts/BasePageLayout";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("history");
@@ -32,7 +34,10 @@ function App() {
         onToggleCollapse={handleToggleSidebar}
       />
       <main style={mainStyle}>
-        {currentPage === "history" && <HistoryPage />}
+        <BasePageLayout>
+          {currentPage === "history" && <HistoryPage />}
+          {currentPage === "categories" && <CategoriesPage />}
+        </BasePageLayout>
       </main>
     </div>
   );

@@ -47,6 +47,22 @@ export function useExpenseForm({ initialData, onSubmit }: UseExpenseFormProps) {
 
     if (!formData.date) {
       newErrors.date = "Date is required";
+    } else {
+      const selectedDate = new Date(formData.date);
+
+      if (Number.isNaN(selectedDate.getTime())) {
+        newErrors.date = "Please enter a valid date";
+      } else {
+        const today = new Date();
+
+        // Compare only the date portion
+        selectedDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate > today) {
+          newErrors.date = "Date cannot be in the future";
+        }
+      }
     }
 
     setErrors(newErrors);

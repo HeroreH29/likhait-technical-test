@@ -14,6 +14,21 @@ const Sidebar: React.FC<SidebarProps> = ({
   isCollapsed = false,
   onToggleCollapse,
 }) => {
+  const getNavItemStyle = (page: string): React.CSSProperties => ({
+    width: "100%",
+    padding: isCollapsed ? "16px" : "16px 24px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: isCollapsed ? "center" : "flex-start",
+    gap: "16px",
+    background: currentPage === page ? COLORS.primary.p03 : "transparent",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "18px",
+    fontWeight: 500,
+    color: COLORS.primary.p09,
+  });
+
   const sidebarStyle: React.CSSProperties = {
     width: isCollapsed ? "80px" : "360px",
     height: "100vh",
@@ -86,23 +101,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     padding: "16px 0",
   };
 
-  const navItemStyle: React.CSSProperties = {
-    width: "100%",
-    padding: isCollapsed ? "16px" : "16px 24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: isCollapsed ? "center" : "flex-start",
-    gap: "16px",
-    background: currentPage === "history" ? COLORS.primary.p03 : "transparent",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "18px",
-    fontWeight: 500,
-    color: COLORS.primary.p09,
-    textAlign: "left",
-    transition: "background 0.2s",
-  };
-
   const navTextStyle: React.CSSProperties = {
     display: isCollapsed ? "none" : "inline",
   };
@@ -140,7 +138,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
       <nav style={navStyle}>
         <button
-          style={navItemStyle}
+          style={getNavItemStyle("history")}
           onClick={() => onNavigate?.("history")}
           onMouseEnter={(e) => {
             if (currentPage !== "history") {
@@ -167,6 +165,33 @@ const Sidebar: React.FC<SidebarProps> = ({
             <line x1="3" y1="10" x2="21" y2="10" />
           </svg>
           <span style={navTextStyle}>History</span>
+        </button>
+        <button
+          style={getNavItemStyle("categories")}
+          onClick={() => onNavigate?.("categories")}
+          onMouseEnter={(e) => {
+            if (currentPage !== "categories") {
+              e.currentTarget.style.background = COLORS.primary.p02;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (currentPage !== "categories") {
+              e.currentTarget.style.background = "transparent";
+            }
+          }}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <rect x="3" y="4" width="14" height="14" rx="2" />
+            <rect x="7" y="8" width="14" height="14" rx="2" />
+          </svg>
+          <span style={navTextStyle}>Categories</span>
         </button>
       </nav>
     </aside>

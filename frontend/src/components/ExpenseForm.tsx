@@ -64,6 +64,14 @@ export function ExpenseForm({
     label: category.name,
   }));
 
+  const today = new Date();
+
+  const localToday = new Date(
+    today.getTime() - today.getTimezoneOffset() * 60000,
+  )
+    .toISOString()
+    .split("T")[0];
+
   return (
     <form onSubmit={handleSubmit} style={formStyle}>
       {isLoading ? (
@@ -107,6 +115,7 @@ export function ExpenseForm({
             label="Date"
             type="date"
             value={formData.date}
+            max={localToday}
             onChange={(e) => handleChange("date", e.target.value)}
             error={errors.date}
             fullWidth
